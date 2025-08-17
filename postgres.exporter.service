@@ -1,0 +1,15 @@
+[Unit]
+Description=Prometheus PostgreSQL Exporter
+After=network.target
+
+[Service]
+Type=simple \
+Restart=always \
+User=vbox \
+Group=vbox \
+Environment=DATA_SOURCE_NAME=postgresql://user:pass@127.0.0.1:5432/database?sslmode=disable \
+Environment=PG_EXPORTER_EXTEND_QUERY_PATH=/var/lib/postgresql/queries.yaml \
+ExecStart=/usr/bin/postgres_exporter \
+   --extend.query-path=/etc/postgres_exporter/queries.yaml
+[Install]
+WantedBy=multi-user.target
